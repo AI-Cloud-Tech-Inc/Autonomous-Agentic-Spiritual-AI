@@ -1,0 +1,26 @@
+:root {
+  --color-bg: #faf8f5;
+  --color-surface: #ffffff;
+  --color-text: #2d2a26;
+  --color-text-muted: #6b6560;
+  --color-primary: #7c6f5b;
+  --color-accent: #a8946a;
+  --color-border: #e8e2da;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Georgia", serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+}
