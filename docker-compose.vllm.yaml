@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  vllm:
+    image: vllm/vllm-openai:latest
+    container_name: vllm-mistral
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/models
+    environment:
+      - HF_TOKEN=${HF_TOKEN}
+    command: >
+      --model mistralai/Mistral-7B-Instruct-v0.1
+      --host 0.0.0.0
+      --port 8000
+      --tensor-parallel-size 1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
