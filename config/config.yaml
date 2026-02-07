@@ -1,0 +1,51 @@
+# Autonomous Agentic Spiritual AI Configuration
+
+# Memory settings
+memory:
+  max_short_term_items: 20
+  episodic_memory_limit: 50
+  save_frequency: 10
+
+# Dialogue settings
+dialogue:
+  tone: empathetic
+  response_length: balanced
+  use_emojis: true
+  spiritual_traditions:
+    - universal
+    - mindfulness
+    - contemplative
+
+# Reasoning settings
+reasoning:
+  emotion_detection: enabled
+  crisis_detection: enabled
+  intent_classification: enabled
+  theme_extraction: enabled
+
+# Agent settings
+agent:
+  greeting_style: warm
+  farewell_style: peaceful
+  check_in_frequency: 5
+
+# Safety settings
+safety:
+  crisis_disclaimer: true
+  professional_referral: true
+  content_boundaries:
+    - no_medical_advice
+    - no_religious_proselytizing
+    - respect_all_traditions
+
+# Features
+features:
+  daily_meditation: true
+  journey_tracking: true
+  progress_insights: true
+  personalization: true
+
+# Logging
+logging:
+  level: INFO
+  console: true
