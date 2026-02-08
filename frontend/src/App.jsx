@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
 const API_BASE = '/api'
 
@@ -7,6 +7,12 @@ function App() {
   const [inputValue, setInputValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
+  const [isRecording, setIsRecording] = useState(false)
+  const [showMeditation, setShowMeditation] = useState(false)
+  const [meditationTime, setMeditationTime] = useState(5)
+  const [timerActive, setTimerActive] = useState(false)
+  const [timerDisplay, setTimerDisplay] = useState('05:00')
+  const [selectedTab, setSelectedTab] = useState('chat')
   const messagesEndRef = useRef(null)
 
   const quickActions = [
@@ -32,6 +38,27 @@ Take a deep breath... and share whatever is on your heart. I'm here to listen wi
   useEffect(() => {
     scrollToBottom()
   }, [messages, isTyping])
+
+  // Meditation timer
+  useEffect(() => {
+    let interval = null
+    if (timerActive && meditationTime > 0) {
+      interval = setInterval(() => {
+        setMeditationTime(prev => {
+          const newTime = prev - 1
+          const minutes = Math.floor(newTime / 60)
+          const seconds = newTime % 60
+          setTimerDisplay(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`)
+          return newTime
+        })
+      }, 1000)
+    } else if (meditationTime === 0) {
+      setTimerActive(false)
+      setTimerDisplay('00:00')
+      // Play a gentle sound or show completion message
+    }
+    return () => clearInterval(interval)
+  }, [timerActive, meditationTime])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -98,6 +125,55 @@ Take a deep breath... and share whatever is on your heart. I'm here to listen wi
     }
   }
 
+  // Voice recognition
+  const startVoiceInput = useCallback(() => {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      alert('Speech recognition is not supported in your browser. Please try Chrome.')
+      return
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    const recognition = new SpeechRecognition()
+    
+    recognition.continuous = false
+    recognition.interimResults = false
+    recognition.lang = 'en-US'
+
+    recognition.onstart = () => {
+      setIsRecording(true)
+    }
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript
+      setInputValue(prev => prev + transcript)
+      handleSend(transcript)
+    }
+
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error:', event.error)
+      setIsRecording(false)
+    }
+
+    recognition.onend = () => {
+      setIsRecording(false)
+    }
+
+    recognition.start()
+  }, [])
+
+  const startMeditation = (minutes) => {
+    setMeditationTime(minutes * 60)
+    setTimerDisplay(`${minutes.toString().padStart(2, '0')}:00`)
+    setTimerActive(true)
+    setShowMeditation(true)
+  }
+
+  const stopMeditation = () => {
+    setTimerActive(false)
+    setMeditationTime(0)
+    setTimerDisplay('05:00')
+  }
+
   return (
     <div className="app-container">
       <header className="header">
@@ -105,64 +181,131 @@ Take a deep breath... and share whatever is on your heart. I'm here to listen wi
         <p>Your mindful journey begins here</p>
       </header>
 
-      <div className="chat-container">
-        <div className="messages-area">
-          {messages.length === 0 ? (
-            <div className="greeting-message">
-              <h2>Take a moment to center yourself</h2>
-              <p>Your compassionate companion is here to listen</p>
-            </div>
-          ) : (
-            messages.map((msg, index) => (
-              <div key={index} className={`message ${msg.role}`}>
-                <div className={`message-content ${msg.isError ? 'emergency' : ''}`}>
-                  {formatMessage(msg.content)}
-                </div>
-              </div>
-            ))
-          )}
-          
-          {isTyping && (
-            <div className="message agent">
-              <div className="message-content">
-                <div className="typing-indicator">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-              </div>
-            </div>
-          )}
-          
-          <div ref={messagesEndRef} />
-        </div>
+      <nav className="tab-nav">
+        <button 
+          className={selectedTab === 'chat' ? 'active' : ''} 
+          onClick={() => setSelectedTab('chat')}
+        >
+          Chat
+        </button>
+        <button 
+          className={selectedTab === 'meditation' ? 'active' : ''} 
+          onClick={() => setSelectedTab('meditation')}
+        >
+          Meditation
+        </button>
+      </nav>
 
-        <div className="quick-actions">
-          {quickActions.map((action, index) => (
-            <button
-              key={index}
-              onClick={() => handleSend(action)}
-              disabled={isLoading}
+      {selectedTab === 'chat' ? (
+        <div className="chat-container">
+          <div className="messages-area">
+            {messages.length === 0 ? (
+              <div className="greeting-message">
+                <h2>Take a moment to center yourself</h2>
+                <p>Your compassionate companion is here to listen</p>
+              </div>
+            ) : (
+              messages.map((msg, index) => (
+                <div key={index} className={`message ${msg.role}`}>
+                  <div className={`message-content ${msg.isError ? 'emergency' : ''}`}>
+                    {formatMessage(msg.content)}
+                  </div>
+                </div>
+              ))
+            )}
+            
+            {isTyping && (
+              <div className="message agent">
+                <div className="message-content">
+                  <div className="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            <div ref={messagesEndRef} />
+          </div>
+
+          <div className="quick-actions">
+            {quickActions.map((action, index) => (
+              <button
+                key={index}
+                onClick={() => handleSend(action)}
+                disabled={isLoading}
+              >
+                {action}
+              </button>
+            ))}
+          </div>
+
+          <div className="input-area">
+            <button 
+              className={`voice-btn ${isRecording ? 'recording' : ''}`}
+              onClick={startVoiceInput}
+              title="Voice input"
             >
-              {action}
+              🎤
             </button>
-          ))}
+            <input
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Share what's on your heart..."
+              disabled={isLoading}
+            />
+            <button onClick={() => handleSend()} disabled={isLoading || !inputValue.trim()}>
+              {isLoading ? '...' : 'Send'}
+            </button>
+          </div>
         </div>
+      ) : (
+        <div className="meditation-container">
+          <div className="timer-section">
+            <h2>🧘 Meditation Timer</h2>
+            <div className="timer-display">{timerDisplay}</div>
+            
+            <div className="timer-presets">
+              {[3, 5, 10, 15, 20].map(minutes => (
+                <button 
+                  key={minutes}
+                  onClick={() => startMeditation(minutes)}
+                  disabled={timerActive}
+                >
+                  {minutes} min
+                </button>
+              ))}
+            </div>
+            
+            {timerActive && (
+              <button className="stop-btn" onClick={stopMeditation}>
+                Stop Meditation
+              </button>
+            )}
+          </div>
 
-        <div className="input-area">
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Share what's on your heart..."
-            disabled={isLoading}
-          />
-          <button onClick={() => handleSend()} disabled={isLoading || !inputValue.trim()}>
-            {isLoading ? '...' : 'Send'}
-          </button>
+          <div className="breathing-section">
+            <h2>🌬️ Breathing Exercise</h2>
+            <div className="breathing-circle">
+              <div className={`breath ${timerActive ? 'active' : ''}`}>
+                {timerActive ? 'Breathe' : 'Ready'}
+              </div>
+            </div>
+            <p className="breath-instructions">
+              {timerActive ? 'Inhale... Exhale...' : 'Select a timer to begin'}
+            </p>
+          </div>
+
+          <div className="meditation-tips">
+            <h2>💡 Today's Meditation</h2>
+            <p>"The present moment is filled with joy and happiness. If you are attentive, you will see it."</p>
+            <p className="author">— Thich Nhat Hanh</p>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

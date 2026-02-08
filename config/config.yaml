@@ -29,6 +29,23 @@ agent:
   farewell_style: peaceful
   check_in_frequency: 5
 
+# LLM settings
+llm:
+  provider: mock  # Options: mock, ollama, openai
+  model: llama3.2  # For Ollama or OpenAI
+  temperature: 0.7
+  max_tokens: 500
+
+# Ollama settings
+ollama:
+  base_url: http://localhost:11434
+  model: llama3.2
+
+# OpenAI settings
+openai:
+  api_key: ${OPENAI_API_KEY}
+  model: gpt-3.5-turbo
+
 # Safety settings
 safety:
   crisis_disclaimer: true
@@ -44,6 +61,8 @@ features:
   journey_tracking: true
   progress_insights: true
   personalization: true
+  voice_input: true
+  meditation_timer: true
 
 # Logging
 logging:

@@ -65,6 +65,39 @@ body {
   font-style: italic;
 }
 
+/* Tab Navigation */
+.tab-nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--sage-light);
+}
+
+.tab-nav button {
+  padding: 0.75rem 2rem;
+  background: transparent;
+  border: 2px solid var(--sage-light);
+  border-radius: 25px;
+  font-size: 1rem;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-secondary);
+}
+
+.tab-nav button:hover {
+  background: var(--sage-light);
+}
+
+.tab-nav button.active {
+  background: var(--accent-sage);
+  border-color: var(--accent-sage);
+  color: white;
+}
+
+/* Chat Container */
 .chat-container {
   flex: 1;
   display: flex;
@@ -146,6 +179,7 @@ body {
   color: #991b1b;
 }
 
+/* Input Area */
 .input-area {
   display: flex;
   gap: 0.75rem;
@@ -203,6 +237,27 @@ body {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
+}
+
+.voice-btn {
+  padding: 0.875rem 1rem !important;
+  background: var(--sage-light) !important;
+  color: var(--text-primary) !important;
+}
+
+.voice-btn.recording {
+  background: #ef4444 !important;
+  color: white !important;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 .quick-actions {
@@ -280,6 +335,132 @@ body {
   }
 }
 
+/* Meditation Section */
+.meditation-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.timer-section,
+.breathing-section,
+.meditation-tips {
+  background: var(--warm-white);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+}
+
+.timer-section h2,
+.breathing-section h2,
+.meditation-tips h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  color: var(--soft-brown);
+  margin-bottom: 1.5rem;
+}
+
+.timer-display {
+  font-size: 4rem;
+  font-weight: 300;
+  color: var(--accent-sage);
+  font-family: 'Cormorant Garamond', serif;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+}
+
+.timer-presets {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.timer-presets button {
+  padding: 0.75rem 1.5rem;
+  background: var(--sage-light);
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.timer-presets button:hover {
+  background: var(--sage);
+}
+
+.timer-presets button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.stop-btn {
+  padding: 0.75rem 2rem !important;
+  background: #ef4444 !important;
+  color: white !important;
+}
+
+.breathing-circle {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--sage-light) 0%, var(--sage) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-soft);
+}
+
+.breath {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  color: var(--soft-brown);
+  transition: all 0.5s ease;
+}
+
+.breath.active {
+  animation: breathe 4s infinite ease-in-out;
+}
+
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.breath-instructions {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.meditation-tips p {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.meditation-tips .author {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-style: normal;
+}
+
 @media (max-width: 600px) {
   .header {
     padding: 1rem;
@@ -304,5 +485,14 @@ body {
   
   .input-area button {
     width: 100%;
+  }
+  
+  .timer-display {
+    font-size: 3rem;
+  }
+  
+  .breathing-circle {
+    width: 120px;
+    height: 120px;
   }
 }
