@@ -3,16 +3,19 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 const API_BASE = '/api'
 
 function App() {
+  // Chat state
   const [messages, setMessages] = useState([])
   const [inputValue, setInputValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
-  const [showMeditation, setShowMeditation] = useState(false)
+  
+  // Meditation state
   const [meditationTime, setMeditationTime] = useState(5)
   const [timerActive, setTimerActive] = useState(false)
   const [timerDisplay, setTimerDisplay] = useState('05:00')
   const [selectedTab, setSelectedTab] = useState('chat')
+  
   const messagesEndRef = useRef(null)
 
   const quickActions = [
@@ -24,11 +27,11 @@ function App() {
 
   const initialGreeting = {
     role: 'agent',
-    content: `🌟 Welcome, dear seeker! 🌟
+    content: `Welcome, dear seeker!
 
-I am your compassionate companion on the journey within — here to support your spiritual growth, offer gentle guidance, and walk alongside you in mindful exploration.
+I am your compassionate companion on the journey within - here to support your spiritual growth, offer gentle guidance, and walk alongside you in mindful exploration.
 
-Take a deep breath... and share whatever is on your heart. I'm here to listen without judgment. 🙏`
+Take a deep breath... and share whatever is on your heart. I'm here to listen without judgment.`
   }
 
   useEffect(() => {
@@ -52,10 +55,9 @@ Take a deep breath... and share whatever is on your heart. I'm here to listen wi
           return newTime
         })
       }, 1000)
-    } else if (meditationTime === 0) {
+    } else if (meditationTime === 0 && timerActive) {
       setTimerActive(false)
-      setTimerDisplay('00:00')
-      // Play a gentle sound or show completion message
+      setTimerDisplay('Namaste')
     }
     return () => clearInterval(interval)
   }, [timerActive, meditationTime])
@@ -165,7 +167,6 @@ Take a deep breath... and share whatever is on your heart. I'm here to listen wi
     setMeditationTime(minutes * 60)
     setTimerDisplay(`${minutes.toString().padStart(2, '0')}:00`)
     setTimerActive(true)
-    setShowMeditation(true)
   }
 
   const stopMeditation = () => {
@@ -177,7 +178,7 @@ Take a deep breath... and share whatever is on your heart. I'm here to listen wi
   return (
     <div className="app-container">
       <header className="header">
-        <h1>🌸 Spiritual AI Companion</h1>
+        <h1>Spiritual AI Companion</h1>
         <p>Your mindful journey begins here</p>
       </header>
 
@@ -192,7 +193,7 @@ Take a deep breath... and share whatever is on your heart. I'm here to listen wi
           className={selectedTab === 'meditation' ? 'active' : ''} 
           onClick={() => setSelectedTab('meditation')}
         >
-          Meditation
+          Meditate
         </button>
       </nav>
 
@@ -247,7 +248,7 @@ Take a deep breath... and share whatever is on your heart. I'm here to listen wi
               onClick={startVoiceInput}
               title="Voice input"
             >
-              🎤
+              Mic
             </button>
             <input
               type="text"
@@ -265,7 +266,7 @@ Take a deep breath... and share whatever is on your heart. I'm here to listen wi
       ) : (
         <div className="meditation-container">
           <div className="timer-section">
-            <h2>🧘 Meditation Timer</h2>
+            <h2>Meditation Timer</h2>
             <div className="timer-display">{timerDisplay}</div>
             
             <div className="timer-presets">
@@ -282,13 +283,13 @@ Take a deep breath... and share whatever is on your heart. I'm here to listen wi
             
             {timerActive && (
               <button className="stop-btn" onClick={stopMeditation}>
-                Stop Meditation
+                End Session
               </button>
             )}
           </div>
 
           <div className="breathing-section">
-            <h2>🌬️ Breathing Exercise</h2>
+            <h2>Breathing Exercise</h2>
             <div className="breathing-circle">
               <div className={`breath ${timerActive ? 'active' : ''}`}>
                 {timerActive ? 'Breathe' : 'Ready'}
@@ -299,26 +300,27 @@ Take a deep breath... and share whatever is on your heart. I'm here to listen wi
             </p>
           </div>
 
-          <div className="soundscape-section">
-            <h2>🎵 Sacred Sounds</h2>
-            <div className="video-container">
-              <iframe
-                width="100%"
-                height="200"
-                src="https://www.youtube.com/embed/2jbLyITT0Wo"
-                title="Chakra Dhyana Meditation"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+          <div className="audio-section">
+            <h2>Sacred Sounds</h2>
+            <div className="audio-display">
+              <div className="om-symbol">AUM</div>
+              <p className="track-name">Chakra Dhyana</p>
+              <p className="sound-label">Sacred Healing Frequencies</p>
+              <a 
+                href="https://www.youtube.com/watch?v=2jbLyITT0Wo&autoplay=1" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="play-btn"
+              >
+                Click to Play Audio
+              </a>
             </div>
-            <p className="sound-label">Chakra Dhyana - Sacred Healing Frequencies</p>
           </div>
 
           <div className="meditation-tips">
-            <h2>💡 Today's Meditation</h2>
+            <h2>Today's Meditation</h2>
             <p>"The present moment is filled with joy and happiness. If you are attentive, you will see it."</p>
-            <p className="author">— Thich Nhat Hanh</p>
+            <p className="author">- Thich Nhat Hanh</p>
           </div>
         </div>
       )}
