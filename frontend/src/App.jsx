@@ -299,6 +299,22 @@ Take a deep breath... and share whatever is on your heart. I'm here to listen wi
             </p>
           </div>
 
+          <div className="soundscape-section">
+            <h2>🎵 Sacred Sounds</h2>
+            <div className="video-container">
+              <iframe
+                width="100%"
+                height="200"
+                src="https://www.youtube.com/embed/2jbLyITT0Wo"
+                title="Chakra Dhyana Meditation"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+            <p className="sound-label">Chakra Dhyana - Sacred Healing Frequencies</p>
+          </div>
+
           <div className="meditation-tips">
             <h2>💡 Today's Meditation</h2>
             <p>"The present moment is filled with joy and happiness. If you are attentive, you will see it."</p>

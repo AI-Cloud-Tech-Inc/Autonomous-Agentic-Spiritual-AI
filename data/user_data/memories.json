@@ -23,11 +23,47 @@
         "themes": [],
         "message_length": 21
       }
+    },
+    {
+      "user": "What is the meditation?",
+      "agent": "Find a comfortable position. Take a deep breath...",
+      "timestamp": "2026-02-08T06:03:43.152538",
+      "context": {
+        "emotion": null,
+        "intent": "meditation_request",
+        "is_crisis": false,
+        "themes": [],
+        "message_length": 23
+      }
+    },
+    {
+      "user": "Guide me in meditation",
+      "agent": "Find a comfortable position. Take a deep breath...",
+      "timestamp": "2026-02-08T06:22:03.513300",
+      "context": {
+        "emotion": null,
+        "intent": "meditation_request",
+        "is_crisis": false,
+        "themes": [],
+        "message_length": 22
+      }
+    },
+    {
+      "user": "I feel grateful today",
+      "agent": "I'm glad you're feeling joyful! What has brought this happiness?",
+      "timestamp": "2026-02-08T06:22:18.326589",
+      "context": {
+        "emotion": "joy",
+        "intent": "emotional_support",
+        "is_crisis": false,
+        "themes": [],
+        "message_length": 21
+      }
     }
   ],
   "long_term": {
     "emotions": {
-      "joy": 1
+      "joy": 2
     }
   }
 }

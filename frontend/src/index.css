@@ -461,6 +461,98 @@ body {
   font-style: normal;
 }
 
+/* Soundscape Section */
+.soundscape-section {
+  background: var(--warm-white);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+}
+
+.soundscape-section h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  color: var(--soft-brown);
+  margin-bottom: 1rem;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.video-container iframe {
+  display: block;
+}
+
+.sound-label {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  --sage-light: #2d3a2e;
+  --sage: #4a5d4b;
+  --sage-dark: #6b8a70;
+  --cream: #1a1f1a;
+  --warm-white: #242824;
+  --soft-brown: #c9a962;
+  --text-primary: #e8ebe4;
+  --text-secondary: #a8b3a6;
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .header,
+body.dark-mode .messages-area,
+body.dark-mode .input-area,
+body.dark-mode .timer-section,
+body.dark-mode .breathing-section,
+body.dark-mode .meditation-tips,
+body.dark-mode .soundscape-section {
+  background: var(--warm-white);
+}
+
+body.dark-mode .message.agent .message-content {
+  background: var(--sage);
+  color: var(--text-primary);
+}
+
+body.dark-mode .quick-actions button,
+body.dark-mode .timer-presets button {
+  background: var(--sage);
+  color: var(--text-primary);
+}
+
+body.dark-mode .quick-actions button:hover,
+body.dark-mode .timer-presets button:hover {
+  background: var(--sage-dark);
+}
+
+body.dark-mode .input-area input {
+  background: var(--sage-light);
+  border-color: var(--sage-dark);
+  color: var(--text-primary);
+}
+
+body.dark-mode .meditation-tips p,
+body.dark-mode .breath {
+  color: var(--text-primary);
+}
+
+body.dark-mode .theme-toggle {
+  background: var(--sage-light);
+}
+
 @media (max-width: 600px) {
   .header {
     padding: 1rem;
