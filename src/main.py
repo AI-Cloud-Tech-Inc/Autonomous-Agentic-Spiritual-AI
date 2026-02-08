@@ -1,5 +1,13 @@
 """Main entry point for Autonomous Agentic Spiritual AI."""
 import sys
+import io
+
+# Enable UTF-8 encoding for stdout/stderr
+if sys.stdout.encoding.lower() != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+if sys.stderr.encoding.lower() != 'utf-8':
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+
 from pathlib import Path
 
 # Add project root to path
