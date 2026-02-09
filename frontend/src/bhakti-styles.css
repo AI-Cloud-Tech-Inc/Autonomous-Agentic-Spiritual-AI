@@ -1,0 +1,423 @@
+/* Bhakti Tab Styles */
+.bhakti-container {
+  padding: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.bhakti-container h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.75rem;
+  color: var(--soft-brown);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Section Description */
+.section-desc {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+/* Section Tabs */
+.section-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.section-tabs button {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--sage);
+  background: transparent;
+  color: var(--sage-dark);
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.section-tabs button.active,
+.section-tabs button:hover {
+  background: var(--sage);
+  color: white;
+}
+
+/* Audio Status Message */
+.audio-status {
+  background: linear-gradient(135deg, var(--accent-gold) 0%, #d4a843 100%);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  animation: gentlePulse 2s ease-in-out infinite;
+}
+
+.audio-status .stop-hint {
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+@keyframes gentlePulse {
+  0%, 100% { box-shadow: 0 2px 8px rgba(212, 168, 67, 0.3); }
+  50% { box-shadow: 0 4px 16px rgba(212, 168, 67, 0.5); }
+}
+
+/* Now Playing Bar */
+.now-playing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, var(--sage) 0%, var(--sage-dark) 100%);
+  color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.playing-indicator {
+  font-weight: 600;
+}
+
+.stop-btn {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.stop-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Mantra Cards */
+.mantras-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.mantra-card {
+  background: var(--warm-white);
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease;
+}
+
+.mantra-card:hover {
+  transform: translateY(-4px);
+}
+
+.mantra-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.mantra-header h3 {
+  font-size: 1.2rem;
+  color: var(--soft-brown);
+  margin-bottom: 0.25rem;
+}
+
+.mantra-english {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.mantra-content {
+  margin-bottom: 1rem;
+}
+
+.sanskrit-text {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.telugu-text {
+  font-size: 1.1rem;
+  color: var(--sage-dark);
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.mantra-meaning {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  text-align: center;
+  padding: 0.5rem;
+  background: var(--sage-light);
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.mantra-benefit {
+  text-align: center;
+  color: var(--sage-dark);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.chant-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, var(--accent-gold) 0%, #d4a843 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chant-btn:hover:not(:disabled) {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(212, 168, 67, 0.3);
+}
+
+.chant-btn.playing,
+.chant-btn:disabled {
+  background: var(--sage-dark);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Bhajans Section */
+.bhajans-section {
+  margin-top: 1rem;
+}
+
+.bhajans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.bhajan-card {
+  background: var(--warm-white);
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease;
+}
+
+.bhajan-card:hover {
+  transform: translateY(-4px);
+}
+
+.bhajan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.bhajan-header h3 {
+  font-size: 1.1rem;
+  color: var(--soft-brown);
+  margin: 0;
+}
+
+.bhajan-deity {
+  font-size: 0.85rem;
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.bhajan-content {
+  margin-bottom: 1rem;
+}
+
+.bhajan-verse {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.bhajan-meaning {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.bhajan-poet {
+  font-size: 0.85rem;
+  color: var(--sage-dark);
+}
+
+.bhajan-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.play-btn {
+  flex: 1;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.play-btn:hover:not(:disabled) {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.play-btn.playing,
+.play-btn:disabled {
+  background: var(--sage-dark);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.audio-note {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding: 1rem;
+  background: var(--sage-light);
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+/* Routines Section */
+.routines-section {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.routine-card {
+  background: var(--warm-white);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.routine-card.morning {
+  border-left: 4px solid #f59e0b;
+}
+
+.routine-card.evening {
+  border-left: 4px solid #6366f1;
+}
+
+.routine-card h3 {
+  font-size: 1.2rem;
+  color: var(--soft-brown);
+  margin-bottom: 0.5rem;
+}
+
+.routine-intro {
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.routine-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--sage-light);
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.routine-practice {
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1 1 100%;
+}
+
+.routine-english {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.routine-duration {
+  color: var(--sage-dark);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.routine-benefit {
+  font-size: 0.8rem;
+  color: var(--sage-dark);
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+/* About Section */
+.about-section {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.about-card {
+  background: var(--warm-white);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.about-card h3 {
+  font-size: 1.1rem;
+  color: var(--soft-brown);
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.about-card h3:first-child {
+  margin-top: 0;
+}
+
+.about-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.safety-note {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--sage-light) 0%, #e8f5e9 100%);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.safety-note h4 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.safety-note p {
+  font-style: italic;
+  margin: 0;
+}

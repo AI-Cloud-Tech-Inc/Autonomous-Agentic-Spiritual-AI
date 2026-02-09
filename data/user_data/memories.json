@@ -59,6 +59,30 @@
         "themes": [],
         "message_length": 21
       }
+    },
+    {
+      "user": "Hello, I am seeking spiritual guidance",
+      "agent": "That's a profound question. Spiritual wisdom often comes from many traditions. What draws you to this question? Let's explore it together.",
+      "timestamp": "2026-02-09T08:00:47.771783",
+      "context": {
+        "emotion": null,
+        "intent": "spiritual_question",
+        "is_crisis": false,
+        "themes": [],
+        "message_length": 38
+      }
+    },
+    {
+      "user": "Your spiritual growth.",
+      "agent": "That's a profound question. Spiritual wisdom often comes from many traditions. What draws you to this question? Let's explore it together.",
+      "timestamp": "2026-02-09T08:16:35.327258",
+      "context": {
+        "emotion": null,
+        "intent": "spiritual_question",
+        "is_crisis": false,
+        "themes": [],
+        "message_length": 22
+      }
     }
   ],
   "long_term": {

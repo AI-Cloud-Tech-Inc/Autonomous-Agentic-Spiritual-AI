@@ -143,6 +143,8 @@ body {
 
 .message.agent {
   justify-content: flex-start;
+  position: relative;
+  padding-right: 50px;
 }
 
 .message-content {
@@ -177,6 +179,40 @@ body {
   background: #fef2f2;
   border: 1px solid #fecaca;
   color: #991b1b;
+}
+
+/* Speak Button */
+.speak-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: var(--sage);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.speak-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.speak-btn.speaking {
+  opacity: 1;
+  animation: pulse-speak 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-speak {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(122, 155, 125, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(122, 155, 125, 0); }
 }
 
 /* Input Area */
@@ -492,20 +528,16 @@ body {
   margin-bottom: 1rem;
 }
 
-.play-btn {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background: var(--accent-sage);
-  color: white;
-  border-radius: 25px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.2s ease;
+.audio-player {
+  width: 100%;
+  max-width: 280px;
+  height: 40px;
+  border-radius: 20px;
+  outline: none;
 }
 
-.play-btn:hover {
-  background: var(--sage-dark);
-  transform: translateY(-2px);
+.audio-player::-webkit-media-controls-panel {
+  background: var(--warm-white);
 }
 
 .meditation-tips p {
@@ -519,6 +551,118 @@ body {
   font-size: 0.9rem;
   color: var(--text-secondary);
   font-style: normal;
+}
+
+/* Bhajans Section */
+.bhajans-container {
+  padding: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.bhajans-container h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.75rem;
+  color: var(--soft-brown);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.bhajans-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.bhajans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.bhajan-card {
+  background: var(--warm-white);
+  border-radius: 16px;
+  padding: 1.25rem;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease;
+}
+
+.bhajan-card:hover {
+  transform: translateY(-4px);
+}
+
+.bhajan-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.bhajan-card h3 {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.bhajan-deity {
+  font-size: 0.85rem;
+  color: var(--sage-dark);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.bhajan-description {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.bhajan-audio {
+  width: 100%;
+  height: 36px;
+  margin-bottom: 0.75rem;
+  border-radius: 18px;
+}
+
+.bhajan-download-btn {
+  display: inline-block;
+  padding: 0.4rem 0.75rem;
+  background: var(--sage);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bhajan-download-btn:hover {
+  background: var(--sage-dark);
+}
+
+.bhajans-note {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: var(--sage-light);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.bhajans-note p {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.bhajans-note code {
+  background: var(--warm-white);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
 }
 
 /* Soundscape Section */
@@ -613,6 +757,242 @@ body.dark-mode .theme-toggle {
   background: var(--sage-light);
 }
 
+/* Affirmations Section */
+.affirmations-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.affirmation-card {
+  background: var(--warm-white);
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+}
+
+.affirmation-card h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  color: var(--soft-brown);
+  margin-bottom: 2rem;
+}
+
+.affirmation-text {
+  font-size: 1.75rem;
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--accent-sage);
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.affirm-btn {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-sage));
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Nunito', sans-serif;
+}
+
+.affirm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.affirmation-history {
+  background: var(--sage-light);
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.affirmation-history h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  color: var(--soft-brown);
+  margin-bottom: 1rem;
+}
+
+.affirmation-history p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.affirmation-tips {
+  background: var(--warm-white);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.affirmation-tips h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  color: var(--soft-brown);
+  margin-bottom: 1rem;
+}
+
+.affirmation-tips p {
+  font-size: 1rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+
+/* Breathing Section */
+.breathing-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.technique-selector {
+  background: var(--warm-white);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.technique-selector h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  color: var(--soft-brown);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.technique-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.technique-btn {
+  padding: 1rem;
+  background: var(--sage-light);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.technique-btn:hover {
+  background: var(--sage);
+}
+
+.technique-btn.active {
+  background: var(--warm-white);
+  box-shadow: var(--shadow-soft);
+}
+
+.technique-btn strong {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: var(--soft-brown);
+  margin-bottom: 0.25rem;
+}
+
+.technique-btn span {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.technique-btn small {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.breathing-exercise {
+  text-align: center;
+  padding: 2rem;
+}
+
+.breathing-circle {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 2rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--sage-light) 0%, var(--sage) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.5s ease;
+}
+
+.breathing-circle.inhale {
+  transform: scale(1.2);
+}
+
+.breathing-circle.exhale {
+  transform: scale(1);
+}
+
+.breathing-circle.hold {
+  transform: scale(1.15);
+}
+
+.breathing-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.phase-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  color: var(--soft-brown);
+}
+
+.breath-counter {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+.start-breath-btn {
+  padding: 1rem 2rem;
+  background: var(--accent-sage);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Nunito', sans-serif;
+}
+
+.start-breath-btn:hover {
+  background: var(--sage-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
 @media (max-width: 600px) {
   .header {
     padding: 1rem;
@@ -647,4 +1027,266 @@ body.dark-mode .theme-toggle {
     width: 120px;
     height: 120px;
   }
+  
+  .affirmation-text {
+    font-size: 1.4rem;
+  }
+  
+  .technique-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Journal Section */
+.journal-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.journal-editor {
+  background: var(--warm-white);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.journal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.journal-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  color: var(--soft-brown);
+}
+
+.toggle-history-btn {
+  padding: 0.5rem 1rem;
+  background: var(--sage-light);
+  border: none;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Nunito', sans-serif;
+}
+
+.toggle-history-btn:hover {
+  background: var(--sage);
+}
+
+.prompt-section {
+  background: linear-gradient(135deg, var(--sage-light) 0%, var(--sage) 100%);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.prompt-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  color: var(--soft-brown);
+  font-style: italic;
+}
+
+.mood-selector {
+  margin-bottom: 1.5rem;
+}
+
+.mood-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.mood-options {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.mood-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mood-btn:hover {
+  background: var(--sage-light);
+}
+
+.mood-btn.active {
+  background: var(--sage-light);
+}
+
+.mood-emoji {
+  font-size: 1.5rem;
+}
+
+.mood-label-text {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.journal-input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid var(--sage-light);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: 'Nunito', sans-serif;
+  resize: vertical;
+  min-height: 150px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  background: var(--warm-white);
+  color: var(--text-primary);
+}
+
+.journal-input:focus {
+  border-color: var(--sage-dark);
+}
+
+.journal-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.save-journal-btn {
+  padding: 0.875rem 2rem;
+  background: var(--accent-sage);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Nunito', sans-serif;
+}
+
+.save-journal-btn:hover:not(:disabled) {
+  background: var(--sage-dark);
+  transform: translateY(-1px);
+}
+
+.save-journal-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.new-prompt-btn {
+  padding: 0.875rem 2rem;
+  background: var(--sage-light);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Nunito', sans-serif;
+}
+
+.new-prompt-btn:hover {
+  background: var(--sage);
+}
+
+/* Journal History */
+.journal-history {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.no-entries {
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+  padding: 2rem;
+}
+
+.journal-entry {
+  background: var(--sage-light);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.entry-date {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.entry-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.entry-mood {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: var(--warm-white);
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+}
+
+.delete-entry-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.delete-entry-btn:hover {
+  color: #ef4444;
+}
+
+.entry-prompt {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  color: var(--soft-brown);
+  font-style: italic;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--sage);
+}
+
+.entry-content {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+  white-space: pre-wrap;
 }
