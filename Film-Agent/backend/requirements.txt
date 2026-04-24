@@ -1,0 +1,21 @@
+# FastAPI and web server
+fastapi>=0.100.0
+uvicorn>=0.23.0
+pydantic>=2.0.0
+python-multipart>=0.0.6
+
+# Environment
+python-dotenv>=1.0.0
+
+# AI/LLM
+openai>=1.0.0
+
+# Video processing (optional)
+# moviepy>=1.0.3
+
+# Database (optional)
+# sqlalchemy>=2.0.0
+# alembic>=1.11.0
+
+# Utilities
+tqdm>=4.65.0
