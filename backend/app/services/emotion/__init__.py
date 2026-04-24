@@ -1,0 +1,1 @@
+"""Emotion detection and analysis."""
