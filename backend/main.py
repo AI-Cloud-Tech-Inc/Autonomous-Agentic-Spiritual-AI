@@ -1,5 +1,7 @@
 """
-AI Film Studio - Main Application Entry Point
+Autonomous Agentic AI — Main Application Entry Point
+
+Unified backend for Spiritual AI Agent + AI Film Studio.
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -34,12 +36,12 @@ async def lifespan(app: FastAPI):
     create_tables()
     yield
     # Shutdown
-    print("Shutting down AI Film Studio...")
+    print("Shutting down...")
 
 
 app = FastAPI(
     title=settings.APP_NAME,
-    description="AI-powered end-to-end video production platform",
+    description="Unified platform: Spiritual AI Agent + AI Film Studio",
     version=settings.API_VERSION,
     lifespan=lifespan
 )
@@ -69,9 +71,10 @@ app.include_router(api_router, prefix=f"/api/{settings.API_VERSION}")
 async def root():
     """Root endpoint"""
     return {
-        "message": "Welcome to AI Film Studio API",
+        "message": "Welcome to Autonomous Agentic AI API",
         "version": settings.API_VERSION,
-        "status": "operational"
+        "status": "operational",
+        "services": ["spiritual-ai", "film-studio"]
     }
 
 

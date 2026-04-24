@@ -13,39 +13,44 @@ def generate_secret_key() -> str:
 
 
 class Settings(BaseSettings):
-    """Application settings"""
-    
+    """Unified settings for Spiritual AI Agent + AI Film Studio."""
+
     # Application
-    APP_NAME: str = "AI-Film-Studio"
+    APP_NAME: str = "Autonomous-Agentic-AI"
     APP_ENV: str = "development"
     DEBUG: bool = True
     API_VERSION: str = "v1"
     SECRET_KEY: str = os.getenv("SECRET_KEY", generate_secret_key())
-    
+
     # Database
-    DATABASE_URL: str = "sqlite:///./ai_film_studio.db"
-    
+    DATABASE_URL: str = "sqlite:///./autonomous_agentic_ai.db"
+
     # Redis
     REDIS_URL: str = "redis://localhost:6379/0"
-    
+
+    # Auth (Spiritual AI)
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+
     # AI Services
     OPENAI_API_KEY: str = ""
     ANTHROPIC_API_KEY: str = ""
     STABILITY_API_KEY: str = ""
     ELEVENLABS_API_KEY: str = ""
     REPLICATE_API_TOKEN: str = ""
-    
+    DEFAULT_LLM_PROVIDER: str = "anthropic"
+    DEFAULT_MODEL: str = "claude-sonnet-4-5-20250929"
+
     # CORS
     CORS_ORIGINS: List[str] = ["http://localhost:3000"]
-    
-    # File Upload
+
+    # File Upload (Film Studio)
     MAX_UPLOAD_SIZE: int = 104857600  # 100MB
     ALLOWED_EXTENSIONS: List[str] = [".mp4", ".mov", ".avi", ".png", ".jpg", ".jpeg"]
-    
-    # Celery
+
+    # Celery (Film Studio)
     CELERY_BROKER_URL: str = "redis://localhost:6379/0"
     CELERY_RESULT_BACKEND: str = "redis://localhost:6379/0"
-    
+
     class Config:
         env_file = ".env"
         case_sensitive = True
