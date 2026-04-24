@@ -1,0 +1,38 @@
+{
+  "name": "ai-film-studio",
+  "version": "1.0.0",
+  "description": "AI-powered film production platform",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && uvicorn main:app --reload",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up",
+    "docker:down": "docker-compose down",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AI-Cloud-Tech-Inc/AI-Film-Studio.git"
+  },
+  "keywords": [
+    "ai",
+    "video",
+    "generation",
+    "editing",
+    "film",
+    "studio",
+    "machine-learning"
+  ],
+  "author": "AI Cloud Tech Inc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AI-Cloud-Tech-Inc/AI-Film-Studio/issues"
+  },
+  "homepage": "https://github.com/AI-Cloud-Tech-Inc/AI-Film-Studio#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

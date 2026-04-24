@@ -1,1 +1,1 @@
-"""Autonomous Agentic Spiritual AI — Backend Application."""
+"""AI Film Studio Application"""

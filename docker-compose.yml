@@ -1,30 +1,100 @@
+version: '3.8'
+
 services:
-  backend:
-    build: ./backend
-    ports:
-      - "8000:8000"
-    env_file:
-      - ./backend/.env
-    depends_on:
-      - db
-
-  frontend:
-    build: ./frontend
-    ports:
-      - "3000:80"
-    depends_on:
-      - backend
-
-  db:
+  # PostgreSQL Database
+  postgres:
     image: postgres:16-alpine
+    container_name: ai-film-studio-db
     environment:
-      POSTGRES_DB: spiritual_ai
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: ${POSTGRES_USER:-filmstudio}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-ai_film_studio}
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-filmstudio}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: ai-film-studio-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai-film-studio-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-filmstudio}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-ai_film_studio}
+      - REDIS_URL=redis://redis:6379/0
+      - APP_ENV=development
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+      - backend_media:/app/media
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Celery Worker
+  celery-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai-film-studio-celery
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-filmstudio}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-ai_film_studio}
+      - REDIS_URL=redis://redis:6379/0
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+      - backend_media:/app/media
+    depends_on:
+      - postgres
+      - redis
+    command: celery -A app.tasks.celery worker --loglevel=info
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ai-film-studio-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - backend
+    command: npm run dev
 
 volumes:
-  pgdata:
+  postgres_data:
+  redis_data:
+  backend_media:

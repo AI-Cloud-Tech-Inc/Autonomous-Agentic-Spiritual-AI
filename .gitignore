@@ -1,24 +1,46 @@
 # Python
 __pycache__/
 *.py[cod]
-*.egg-info/
-dist/
+*$py.class
+*.so
+.Python
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
 *.egg
-.venv/
 venv/
 env/
+ENV/
 
 # Node
 node_modules/
-frontend/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.next/
+out/
+build/
 
-# Environment
+# Environment variables
 .env
 .env.local
-.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# IDE
+# IDEs
 .vscode/
 .idea/
 *.swp
@@ -29,12 +51,47 @@ frontend/dist/
 .DS_Store
 Thumbs.db
 
-# Test / Coverage
-htmlcov/
-.coverage
+# Logs
+logs/
+*.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+db.sqlite3
+
+# Media files (temporary and large)
+temp_media/
+uploads/
+output/
+storage/videos/
+storage/temp/
+storage/cache/
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+
+# API Keys and Secrets
+secrets/
+*.pem
+*.key
+
+# Docker
+docker-compose.override.yml
+
+# Testing
 .pytest_cache/
+.coverage
+htmlcov/
 coverage/
 
-# Misc
-*.log
-*.pid
+# AI Models (download separately)
+ai-models/checkpoints/
+ai-models/weights/
+ai-models/cache/
+models/*.pth
+models/*.safetensors
+models/*.ckpt

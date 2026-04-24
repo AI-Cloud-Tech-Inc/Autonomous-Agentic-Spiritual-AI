@@ -1,1 +1,1 @@
-"""Core package — configuration, security, and shared utilities."""
+"""Core application modules"""
