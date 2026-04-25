@@ -13,23 +13,20 @@ def generate_secret_key() -> str:
 
 
 class Settings(BaseSettings):
-    """Unified settings for Spiritual AI Agent + AI Film Studio."""
+    """AI Film Studio settings."""
 
     # Application
-    APP_NAME: str = "Autonomous-Agentic-AI"
+    APP_NAME: str = "AI-Film-Studio"
     APP_ENV: str = "development"
     DEBUG: bool = True
     API_VERSION: str = "v1"
     SECRET_KEY: str = os.getenv("SECRET_KEY", generate_secret_key())
 
     # Database
-    DATABASE_URL: str = "sqlite:///./autonomous_agentic_ai.db"
+    DATABASE_URL: str = "sqlite:///./ai_film_studio.db"
 
     # Redis
     REDIS_URL: str = "redis://localhost:6379/0"
-
-    # Auth (Spiritual AI)
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
     # AI Services
     OPENAI_API_KEY: str = ""
@@ -43,11 +40,11 @@ class Settings(BaseSettings):
     # CORS
     CORS_ORIGINS: List[str] = ["http://localhost:3000"]
 
-    # File Upload (Film Studio)
+    # File Upload
     MAX_UPLOAD_SIZE: int = 104857600  # 100MB
     ALLOWED_EXTENSIONS: List[str] = [".mp4", ".mov", ".avi", ".png", ".jpg", ".jpeg"]
 
-    # Celery (Film Studio)
+    # Celery
     CELERY_BROKER_URL: str = "redis://localhost:6379/0"
     CELERY_RESULT_BACKEND: str = "redis://localhost:6379/0"
 

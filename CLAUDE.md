@@ -1,11 +1,8 @@
-# CLAUDE.md — Developer Guide for Autonomous-Agentic-Spiritual-AI
+# CLAUDE.md — Developer Guide for AI Film Studio
 
 ## Project Overview
 
-A unified platform by **AI Cloud Tech Inc** combining two autonomous agentic AI systems:
-
-- **Spiritual AI Agent** — supports inner growth, reflection, and well-being through ethical, non-dogmatic guidance (CLI + API)
-- **AI Film Studio** — autonomous film production via collaborative AI agents (Director, Screenwriter, Cinematographer, Sound Designer, Editor)
+**AI Film Studio** by **AI Cloud Tech Inc** — autonomous film production via collaborative AI agents. Six specialized agents (Director, Screenwriter, Cinematographer, Sound Designer, VFX, Editor) work together to create films from a single text prompt.
 
 **Tech Stack:** Python 3.11 / FastAPI (backend) + Next.js 14 / TypeScript / Tailwind (frontend) + PostgreSQL + Redis + Celery
 
@@ -17,26 +14,30 @@ A unified platform by **AI Cloud Tech Inc** combining two autonomous agentic AI 
 
 ```
 Autonomous-Agentic-Spiritual-AI/
-├── backend/                         # FastAPI backend (unified)
-│   ├── main.py                      # Single entry point
+├── backend/                         # FastAPI backend
+│   ├── main.py                      # Application entry point
 │   ├── Dockerfile
 │   ├── requirements.txt
 │   ├── .env.example
-│   ├── alembic/                     # DB migrations (not yet generated)
+│   ├── alembic/                     # DB migrations
 │   ├── app/
 │   │   ├── core/
-│   │   │   ├── config.py            # Unified pydantic settings
-│   │   │   └── security.py          # JWT + bcrypt auth
+│   │   │   └── config.py            # Pydantic settings
 │   │   ├── api/
 │   │   │   ├── v1/
-│   │   │   │   ├── router.py        # Main router (Film + Spiritual)
-│   │   │   │   └── endpoints/       # Film Studio CRUD endpoints
+│   │   │   │   ├── router.py        # Main API router
+│   │   │   │   └── endpoints/       # CRUD endpoints
+│   │   │   │       ├── projects.py
+│   │   │   │       ├── scripts.py
+│   │   │   │       ├── scenes.py
+│   │   │   │       ├── storyboards.py
+│   │   │   │       ├── voiceovers.py
+│   │   │   │       └── videos.py
 │   │   │   └── routes/
 │   │   │       ├── autonomous.py    # Film pipeline orchestration
-│   │   │       ├── chat.py          # Spiritual AI chat (stub)
-│   │   │       ├── users.py         # User auth (stub)
-│   │   │       └── sessions.py      # Session mgmt (stub)
-│   │   ├── agents/                  # Film Studio AI agents
+│   │   │       └── health.py        # Health check
+│   │   ├── agents/                  # AI agents (6 total)
+│   │   │   ├── base_agent.py        # Abstract base with Claude API
 │   │   │   ├── orchestrator.py      # Coordinates all 6 agents
 │   │   │   ├── director_agent.py
 │   │   │   ├── screenwriter_agent.py
@@ -45,55 +46,38 @@ Autonomous-Agentic-Spiritual-AI/
 │   │   │   ├── vfx_agent.py
 │   │   │   └── editor_agent.py
 │   │   ├── models/                  # SQLAlchemy ORM
-│   │   │   ├── project.py, scene.py, script.py  # Film Studio
-│   │   │   └── user.py, session.py, message.py  # Spiritual AI
-│   │   ├── schemas/                 # Pydantic schemas
+│   │   │   ├── base.py
+│   │   │   ├── project.py
+│   │   │   ├── scene.py
+│   │   │   └── script.py
+│   │   ├── schemas/                 # Pydantic request/response schemas
 │   │   ├── services/
-│   │   │   ├── agent/spiritual_agent.py  # Spiritual agent (stub)
-│   │   │   ├── emotion/detector.py       # Emotion detection (stub)
-│   │   │   ├── spiritual/guidance.py     # Guidance service (stub)
-│   │   │   ├── llm/client.py             # Unified LLM client (stub)
-│   │   │   ├── video_generator.py        # Film Studio service
-│   │   │   └── audio_generator.py        # Film Studio service
-│   │   ├── db/session.py            # Async SQLAlchemy factory
-│   │   ├── database.py              # Sync SQLAlchemy (Film Studio)
+│   │   │   ├── ai_services.py       # Multi-provider AI integration
+│   │   │   ├── ai_generator.py
+│   │   │   ├── video_generator.py
+│   │   │   ├── video_service.py
+│   │   │   ├── audio_generator.py
+│   │   │   └── storage_service.py
+│   │   ├── database.py              # SQLAlchemy init
+│   │   ├── db/session.py            # Async session factory
 │   │   ├── middleware/              # Error handling + logging
 │   │   └── tasks/                   # Celery async tasks
 │   └── tests/
 │
 ├── frontend/                        # Next.js 14 + TypeScript + Tailwind
-│   ├── app/                         # Next.js pages (Film Studio)
-│   │   ├── layout.tsx, page.tsx
-│   │   └── create/page.tsx
+│   ├── app/
+│   │   ├── layout.tsx, page.tsx     # Landing page
+│   │   └── create/page.tsx          # Film creation page
 │   ├── src/
-│   │   ├── components/              # Spiritual AI UI components
-│   │   │   ├── chat/                # ChatWindow, MessageList, etc.
-│   │   │   ├── meditation/          # MeditationTimer
-│   │   │   └── reflection/          # ReflectionPrompt
-│   │   ├── hooks/, services/, store/ # React hooks, API, Zustand state
-│   │   ├── types/                   # TypeScript interfaces
-│   │   ├── BhaktiTab.jsx            # Bhakti/devotional content
-│   │   └── spiritual_content.js     # Spiritual content data
+│   │   ├── services/api.ts          # Axios API client
+│   │   └── utils/formatDate.ts
 │   ├── package.json, tsconfig.json
 │   └── next.config.js, tailwind.config.js
 │
-├── src/                             # Spiritual AI agent core (standalone CLI)
-│   ├── main.py                      # Interactive CLI entry point
-│   ├── core/
-│   │   ├── agent.py                 # SpiritualAgent class (IMPLEMENTED)
-│   │   ├── llm_client.py            # Ollama/OpenAI client
-│   │   └── constants.py             # Emotions, crisis keywords
-│   ├── memory/memory_manager.py     # Short/long/episodic memory
-│   ├── dialogue/conversation_handler.py
-│   └── reasoning/context_analyzer.py
-│
-├── config/config.yaml               # Spiritual AI YAML config
-├── data/prompts/                    # Meditation prompt library
 ├── docker-compose.yml               # Full stack orchestration
 ├── .github/workflows/               # CI/CD pipelines
 ├── .env.example                     # Environment template
-├── docs/                            # Architecture + integration docs
-└── [AGENT_ARCHITECTURE, QUICKSTART, CONTRIBUTING, ...].md
+└── docs/                            # Architecture docs
 ```
 
 ---
@@ -103,7 +87,7 @@ Autonomous-Agentic-Spiritual-AI/
 ### Backend
 ```bash
 cd backend
-cp .env.example .env                 # add your API keys
+cp .env.example .env                 # add your ANTHROPIC_API_KEY
 pip install -r requirements.txt
 uvicorn main:app --reload            # http://localhost:8000
 ```
@@ -113,12 +97,6 @@ uvicorn main:app --reload            # http://localhost:8000
 cd frontend
 npm install
 npm run dev                          # http://localhost:3000
-```
-
-### Spiritual AI CLI (standalone)
-```bash
-pip install -r requirements.txt
-python src/main.py                   # interactive chat
 ```
 
 ### Docker Compose (full stack)
@@ -133,29 +111,34 @@ docker compose up --build            # backend + frontend + postgres + redis
 
 All routes live under `/api/v1/`:
 
-### Film Studio
 | Method | Endpoint | Status |
 |--------|----------|--------|
-| POST | `/api/v1/autonomous/create-film` | Implemented |
-| GET | `/api/v1/autonomous/projects` | Implemented |
-| GET | `/api/v1/autonomous/projects/{id}` | Implemented |
-| GET | `/api/v1/autonomous/agent-status` | Implemented |
-| * | `/api/v1/scripts/*` | Stub |
+| POST | `/api/v1/autonomous/create-film` | **Implemented** |
+| GET | `/api/v1/autonomous/projects` | **Implemented** |
+| GET | `/api/v1/autonomous/projects/{id}` | **Implemented** |
+| GET | `/api/v1/autonomous/agent-status` | **Implemented** |
+| DELETE | `/api/v1/autonomous/clear-memory` | **Implemented** |
+| * | `/api/v1/projects/*` | Stub |
+| * | `/api/v1/scripts/*` | Partial |
 | * | `/api/v1/storyboards/*` | Stub |
 | * | `/api/v1/scenes/*` | Stub |
-| * | `/api/v1/voiceovers/*` | Stub |
+| * | `/api/v1/voiceovers/*` | Partial |
 | * | `/api/v1/videos/*` | Stub |
-| * | `/api/v1/projects/*` | Stub |
 
-### Spiritual AI
-| Method | Endpoint | Status |
-|--------|----------|--------|
-| POST | `/api/v1/chat/` | Stub |
-| POST | `/api/v1/users/register` | Stub |
-| POST | `/api/v1/users/login` | Stub |
-| GET | `/api/v1/users/me` | Stub |
-| POST | `/api/v1/sessions/` | Stub |
-| GET | `/api/v1/sessions/{id}` | Stub |
+---
+
+## AI Agent Pipeline
+
+The film creation pipeline runs 6 agents in sequence:
+
+1. **Director** — creative vision + scene breakdown
+2. **Screenwriter** — script with dialogue, narration, audio cues
+3. **Cinematographer** — shot plans, camera, lighting, color palette
+4. **Sound Designer** — music, SFX, voiceover guidance
+5. **VFX** — color grading, visual effects, quality notes
+6. **Editor** — timeline assembly, transitions, final cut
+
+All agents inherit from `BaseAgent`, use the Anthropic Claude API, and return structured JSON with fallbacks.
 
 ---
 
@@ -182,28 +165,26 @@ All routes live under `/api/v1/`:
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| Film Studio agents | **Done** | Director, Screenwriter, Cinematographer, Sound, VFX, Editor |
-| Film pipeline API | **Done** | `/autonomous/create-film` end-to-end |
-| Spiritual AI CLI | **Done** | `python src/main.py` — fully functional |
-| Spiritual AI API | **Stub** | Chat, users, sessions need implementation |
-| Spiritual AI services | **Stub** | Agent, emotion, guidance, LLM client |
-| Database models | **Done** | Film + Spiritual models defined |
-| Database migrations | **Missing** | Alembic configured but no migrations |
-| Frontend (Film Studio) | **Partial** | Next.js pages scaffolded |
-| Frontend (Spiritual AI) | **Partial** | Chat components exist, need wiring |
+| AI agents (6) | **Done** | Director, Screenwriter, Cinematographer, Sound, VFX, Editor |
+| Agent orchestrator | **Done** | Full pipeline with memory management |
+| Autonomous API | **Done** | `/autonomous/create-film` end-to-end |
+| Database models | **Done** | Project, Scene, Script with relationships |
+| V1 CRUD endpoints | **Stub/Partial** | Need real DB integration |
+| Celery tasks | **Stub** | Task shells defined, logic TODO |
+| Database migrations | **Missing** | Alembic configured, no migrations |
+| Frontend | **Partial** | Landing page done, create page scaffolded |
 | Tests | **Minimal** | Only health check tests |
-| Docker setup | **Done** | Full stack compose file |
+| Docker setup | **Done** | Full stack compose |
 | CI/CD | **Done** | GitHub Actions pipeline |
 
 ---
 
 ## Conventions
 
-1. **Non-dogmatic, inclusive** — spiritual content must respect all traditions
-2. **Preserve autonomy** — guide and suggest, never coerce
-3. **Backend:** Python, FastAPI, SQLAlchemy, Pydantic
-4. **Frontend:** Next.js 14, TypeScript, Tailwind CSS
-5. **Config:** use `.env` files, never commit secrets
-6. **Routes:** add new endpoints under `backend/app/api/v1/` or `backend/app/api/routes/`
-7. **Models:** add to `backend/app/models/`, then generate alembic migration
-8. **Commit style:** `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`
+1. **Backend:** Python, FastAPI, SQLAlchemy, Pydantic
+2. **Frontend:** Next.js 14, TypeScript, Tailwind CSS
+3. **Config:** use `.env` files, never commit secrets
+4. **Routes:** add new endpoints under `backend/app/api/v1/endpoints/` or `backend/app/api/routes/`
+5. **Models:** add to `backend/app/models/`, then generate alembic migration
+6. **Agents:** inherit from `BaseAgent`, implement async `process()` method
+7. **Commit style:** `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`
