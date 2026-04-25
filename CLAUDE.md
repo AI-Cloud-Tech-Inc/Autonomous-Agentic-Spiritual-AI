@@ -37,11 +37,12 @@ Autonomous-Agentic-Spiritual-AI/
 │   │   │       ├── users.py         # User auth (stub)
 │   │   │       └── sessions.py      # Session mgmt (stub)
 │   │   ├── agents/                  # Film Studio AI agents
-│   │   │   ├── orchestrator.py      # Coordinates all agents
+│   │   │   ├── orchestrator.py      # Coordinates all 6 agents
 │   │   │   ├── director_agent.py
 │   │   │   ├── screenwriter_agent.py
 │   │   │   ├── cinematographer_agent.py
 │   │   │   ├── sound_designer_agent.py
+│   │   │   ├── vfx_agent.py
 │   │   │   └── editor_agent.py
 │   │   ├── models/                  # SQLAlchemy ORM
 │   │   │   ├── project.py, scene.py, script.py  # Film Studio
@@ -181,7 +182,7 @@ All routes live under `/api/v1/`:
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| Film Studio agents | **Done** | Director, Screenwriter, Cinematographer, Sound, Editor |
+| Film Studio agents | **Done** | Director, Screenwriter, Cinematographer, Sound, VFX, Editor |
 | Film pipeline API | **Done** | `/autonomous/create-film` end-to-end |
 | Spiritual AI CLI | **Done** | `python src/main.py` — fully functional |
 | Spiritual AI API | **Stub** | Chat, users, sessions need implementation |

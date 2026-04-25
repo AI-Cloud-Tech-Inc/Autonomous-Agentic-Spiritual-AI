@@ -9,6 +9,7 @@ from .screenwriter_agent import ScreenwriterAgent
 from .cinematographer_agent import CinematographerAgent
 from .sound_designer_agent import SoundDesignerAgent
 from .editor_agent import EditorAgent
+from .vfx_agent import VFXAgent
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +23,8 @@ class AgentOrchestrator:
         self.cinematographer = CinematographerAgent(model=model, anthropic_api_key=anthropic_api_key)
         self.sound_designer = SoundDesignerAgent(model=model, anthropic_api_key=anthropic_api_key)
         self.editor = EditorAgent(model=model, anthropic_api_key=anthropic_api_key)
-        logger.info("Agent Orchestrator initialised with 5 agents")
+        self.vfx = VFXAgent(model=model, anthropic_api_key=anthropic_api_key)
+        logger.info("Agent Orchestrator initialised with 6 agents")
 
     @classmethod
     def from_settings(cls):
@@ -63,8 +65,17 @@ class AgentOrchestrator:
                 "vision": director_output["vision"],
             })
 
-            # Step 5: Editor — assemble timeline
-            logger.info("Step 5: Editor assembling film...")
+            # Step 5: VFX — visual effects & color grading
+            logger.info("Step 5: VFX processing effects...")
+            vfx_output = await self.vfx.process({
+                "scenes": director_output["scenes"],
+                "shot_plans": cinematographer_output.get("shot_plans", []),
+                "style": style,
+                "vision": director_output["vision"],
+            })
+
+            # Step 6: Editor — assemble timeline
+            logger.info("Step 6: Editor assembling film...")
             media_assets = self._build_media_asset_list(director_output["scenes"])
             editor_output = await self.editor.process({
                 "scenes": director_output["scenes"],
@@ -81,6 +92,7 @@ class AgentOrchestrator:
                 "script": screenwriter_output,
                 "cinematography": cinematographer_output,
                 "sound": sound_output,
+                "vfx": vfx_output,
                 "media_assets": media_assets,
                 "final_timeline": editor_output,
                 "workflow_steps": [
@@ -88,6 +100,7 @@ class AgentOrchestrator:
                     {"agent": "Screenwriter", "status": "completed"},
                     {"agent": "Cinematographer", "status": "completed"},
                     {"agent": "SoundDesigner", "status": "completed"},
+                    {"agent": "VFX", "status": "completed"},
                     {"agent": "Editor", "status": "completed"},
                 ],
             }
@@ -104,9 +117,9 @@ class AgentOrchestrator:
         }
 
     def get_agent_status(self) -> Dict[str, Any]:
-        agents = [self.director, self.screenwriter, self.cinematographer, self.sound_designer, self.editor]
+        agents = [self.director, self.screenwriter, self.cinematographer, self.sound_designer, self.vfx, self.editor]
         return {a.name: {"memory_items": len(a.memory)} for a in agents}
 
     def clear_all_memory(self):
-        for agent in [self.director, self.screenwriter, self.cinematographer, self.sound_designer, self.editor]:
+        for agent in [self.director, self.screenwriter, self.cinematographer, self.sound_designer, self.vfx, self.editor]:
             agent.clear_memory()
